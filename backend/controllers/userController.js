@@ -12,6 +12,13 @@ const loginUser =  async(req, res) => {
 
       // Genera JWT
       const token = jwt.sign({id: user.id, email: user.email}, process.env.JWT_SECRET, {expiresIn: '1h'});
+
+      // Envia el token a traves de cookies para frontend
+      res.cookie('token', token, {
+         httpOnly: true,
+         secure: process.env.NODE_ENV === 'production',
+         maxAge: 60 * 60 * 1000 // 1h
+      })
       res.json({message: 'Login correcto.', token});
 
    } catch (error) {
@@ -46,7 +53,7 @@ const registerUser = async (req, res) => {
       // Guardar en db
       const newUser = await User.create({name, email, password: hashedPassword})
 
-      res.status(201).send('Usuario guardado de manera exitosa.', 'user:',  newUser)
+      res.status(201).json({message: 'Usuario guardado de manera exitosa.', user: newUser})
    } catch (error) {
       console.error('Error registrando usuario: ', error);
       res.status(500).json({message: error.message});
