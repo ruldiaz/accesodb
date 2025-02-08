@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const {validationResult} = require('express-validator');
 
 const loginUser =  async(req, res) => {
    try {
@@ -29,7 +30,7 @@ const loginUser =  async(req, res) => {
 
 const getAllUsers = async (req, res) => {
    try {
-      const users = await User.findAll();
+      const users = await User.findAll({attributes: {exclude: ['password']}});
       res.status(200).json(users.length > 0 ? users : {message: 'No hay usuarios registrados.'});   
    }catch(error) {
       console.error('Error al mostrar usuarios.');
@@ -39,6 +40,10 @@ const getAllUsers = async (req, res) => {
 
 const registerUser = async (req, res) => {
    try {
+      const errors = validationResult(req);
+      if(!errors.isEmpty()){
+         return res.status(400).json(errors);
+      }
       const {name, email, password} = req.body;
 
       // Validar la existencia previa del usuario

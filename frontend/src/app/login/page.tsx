@@ -1,6 +1,6 @@
 "use client"; 
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link"; 
 
@@ -8,11 +8,21 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMesage] = useState("");
   const router = useRouter();
+
+  // Enviar a dashboard si ya inició sesión
+  useEffect(()=>{
+    const token = localStorage.getItem("token");
+    if(token){
+      router.push("/dashboard");
+    }
+  }, [router])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(""); 
+    setSuccessMesage("");
 
     try {
       const res = await fetch("http://localhost:5000/api/users/login", {
@@ -24,43 +34,60 @@ export default function Login() {
 
       if (!res.ok) throw new Error("Credenciales incorrectas");
 
+      setSuccessMesage("Credenciales correctas, accesando...");
+
       const data = await res.json();
       localStorage.setItem("token", data.token);
-      router.push("/dashboard"); 
+
+      setTimeout(()=>{
+        router.push("/dashboard"); 
+      },2000);
+
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error desconocido");
     }
   };
 
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      <h2 className="text-sm text-center font-[family-name:var(--font-geist-mono)]">Ingresa los datos de acceso de tu cuenta</h2>
-      <form className="text-sm font-[family-name:var(--font-geist-mono)]" onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Correo electrónico"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Contraseña"
-          required
-        />
-        <button className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold" type="submit">Ingresar</button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       
-      {/* Register page */}
-      <p className="text-sm text-center font-[family-name:var(--font-geist-mono)]">
-        ¿Aun no tienes cuenta?{" "}
-        <Link href="/register" style={{ color: "blue", textDecoration: "underline" }}>
-          Crea una cuenta gratis!
-        </Link>
-      </p>
+      <div className="bg-black/[.05] dark:bg-white/[.06] p-6 rounded-lg shadow-lg w-80 sm:w-96 text-center">
+        <h2 className="text-sm font-[family-name:var(--font-geist-mono)] text-gray-900 dark:text-gray-100">
+          Ingresa los datos de acceso de tu cuenta
+        </h2>
+        <form className="mt-4 flex flex-col gap-4 text-sm font-[family-name:var(--font-geist-mono)]" onSubmit={handleLogin}>
+          <input
+            className="border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Correo electrónico"
+            required
+          />
+          <input
+            className="border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Contraseña"
+            required
+          />
+          <button className="bg-black/[.05] dark:bg-white/[.06] px-3 py-2 rounded font-semibold hover:bg-black/[.1] dark:hover:bg-white/[.12] transition" type="submit">
+            Ingresar
+          </button>
+          {successMessage && (
+            <p className="text-green-500 text-sm mt-2">{successMessage}</p>
+          )}
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+        </form>
+
+        <p className="mt-4 text-sm font-[family-name:var(--font-geist-mono)] text-gray-900 dark:text-gray-100">
+          ¿Aún no tienes cuenta?{" "}
+          <Link href="/register" className="text-blue-500 hover:underline">
+            Crea una cuenta gratis!
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

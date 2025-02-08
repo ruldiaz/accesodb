@@ -68,9 +68,9 @@ const Dashboard = () => {
 
   return (
     <div className="p-2 text-sm font-[family-name:var(--font-geist-mono)]"> {/* Aplica la fuente también aquí */}
-      <h1 className="text-center">Interfaz de usuario</h1>
+      <h1 className="text-center mt-5">Interfaz de usuario</h1>
       {userData ? (
-        <div className="p-2">
+        <div className="space-y-4 p-20 text-center mt-10">
           <p><strong>Id:</strong> {userData.id}</p>
           <p><strong>Nombre:</strong> {userData.name}</p>
           <p><strong>Correo electrónico:</strong> {userData.email}</p>
@@ -79,12 +79,14 @@ const Dashboard = () => {
       ) : (
         <p>No se pudo cargar la información del usuario.</p>
       )}
-      <button
-        onClick={handleLogout}
-        className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-      >
-        Cerrar sesión
-      </button>
+      <div className="flex justify-center mt-10">
+        <button
+          onClick={handleLogout}
+          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
+        >
+          Cerrar sesión
+        </button>
+      </div>
     </div>
   );
 };

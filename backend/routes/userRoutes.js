@@ -2,11 +2,18 @@ const express = require('express');
 const { loginUser, registerUser, getAllUsers } = require('../controllers/userController');
 const authenticateToken = require('../middlewares/authMiddleware');
 const User = require('../models/User');
+const {check} = require('express-validator');
 
 const router = express.Router();
 
 router.post('/login', loginUser);
-router.post('/register', registerUser);
+router.post('/register', [
+  check('name', 'El nombre es obligatorio.')
+    .not().isEmpty(),
+  check('email', 'El correo no es válido.').isEmail(),
+  check('password','La contraseña debe tener al menos 6 caracteres.')
+    .isLength({min: 6}),
+],registerUser);
 router.get('/list', getAllUsers);
 
 // Ruta con proteccion
