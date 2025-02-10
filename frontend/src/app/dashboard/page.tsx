@@ -20,7 +20,7 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
       console.log("dashboard token: ", token);
       if (!token) {
-        router.replace("/login"); 
+        //router.replace("/login"); 
         return;
       }
 
@@ -38,11 +38,11 @@ const Dashboard = () => {
           const data = await res.json();
           setUserData(data.user); 
         } else {
-          router.replace("/login"); 
+          //router.replace("/login"); 
         }
       } catch (error) {
         console.error(error);
-        router.replace("/login"); 
+        //router.replace("/login"); 
       } finally {
         setIsLoading(false); 
       }
