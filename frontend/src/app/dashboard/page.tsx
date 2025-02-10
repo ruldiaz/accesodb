@@ -25,7 +25,7 @@ const Dashboard = () => {
       }
 
       try {
-        const res = await fetch("https://accesodb.onrender.com/api/users/dashboard", {
+        const res = await fetch("https://accesodb-frontend.onrender.com/api/users/dashboard", {
           method: "GET",
           headers: {
             Authorization: token, 
