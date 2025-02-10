@@ -17,9 +17,8 @@ const loginUser =  async(req, res) => {
       // Envia el token a traves de cookies para frontend
       res.cookie('token', token, {
          httpOnly: true,
-         secure: process.env.NODE_ENV === 'production',
-         sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-         domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined,
+         secure: true,
+         sameSite: 'none',
          maxAge: 60 * 60 * 1000 // 1h
       })
       res.json({message: 'Login correcto.', token});

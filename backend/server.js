@@ -9,7 +9,7 @@ const cors = require('cors');
 dotenv.config(); // Se cargan variables de entorno
 
 const corsOptions = {
-   origin: ['http://localhost:3000','https://accesodb.onrender.com', "https://accesodb-frontend.onrender.com"],
+   origin: ['http://localhost:3000','https://accesodb.onrender.com', "https://accesodb-frontend.onrender.com", *],
    credentials: true,
    methods: ['GET', 'POST'],
    allowedHeaders: ['Authorization', 'Content-Type']
