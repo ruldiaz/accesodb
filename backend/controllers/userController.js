@@ -17,8 +17,9 @@ const loginUser =  async(req, res) => {
       // Envia el token a traves de cookies para frontend
       res.cookie('token', token, {
          httpOnly: true,
-         secure: true,
-         sameSite: 'none',
+         secure: process.env.NODE_ENV === 'production',
+         sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+         domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined,
          maxAge: 60 * 60 * 1000 // 1h
       })
       res.json({message: 'Login correcto.', token});
@@ -43,7 +44,7 @@ const registerUser = async (req, res) => {
    try {
       const errors = validationResult(req);
       if(!errors.isEmpty()){
-         return res.status(400).json(errors);
+         return res.status(400).json({errors: errors.array()});
       }
       const {name, email, password} = req.body;
 
