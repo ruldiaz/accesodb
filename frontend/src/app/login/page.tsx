@@ -38,7 +38,7 @@ export default function Login() {
       console.log("Estado actualizado:", successMessage);
 
       const data = await res.json();
-      localStorage.setItem("token", data.token);
+      //localStorage.setItem("token", data.token);
       console.log("Token almacenado en localStorage:", data.token);
       
       setTimeout(()=>{

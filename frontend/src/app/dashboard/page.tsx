@@ -17,21 +17,21 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchDashboard = async () => {
-      const token = localStorage.getItem("token");
-      console.log("dashboard token: ", token);
-      if (!token) {
-        router.replace("/login"); 
-        return;
-      }
+      //const token = localStorage.getItem("token");
+      //console.log("dashboard token: ", token);
+      //if (!token) {
+      //  router.replace("/login"); 
+      //  return;
+      //}
 
       try {
         const res = await fetch("https://accesodb.onrender.com/api/users/dashboard", {
           method: "GET",
           credentials: "include",
-          headers: {
+          /*headers: {
             Authorization: token, 
             "Content-Type": "application/json",
-          },
+          },*/
         });
 
         if (res.ok) {

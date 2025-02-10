@@ -1,8 +1,10 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const sequelize = require('./config/sequelize');
 const dotenv = require('dotenv');
 const userRoutes = require('./routes/userRoutes');
 const cors = require('cors');
+
 
 dotenv.config(); // Se cargan variables de entorno
 
@@ -14,7 +16,7 @@ const corsOptions = {
 }
 
 const app = express();
-
+app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(express.json());
 
