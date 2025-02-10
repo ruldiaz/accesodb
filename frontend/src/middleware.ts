@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
-  //const token = req.cookies.get("token"); 
-  const token = localStorage.getItem("token");
-  //const isAuthPage = req.nextUrl.pathname === "/login";
+  const token = req.cookies.get("token"); 
+  //const token = localStorage.getItem("token");
+  const isAuthPage = req.nextUrl.pathname === "/login";
 
-  if (!token /*&& !isAuthPage*/) {
+  if (!token && !isAuthPage) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
