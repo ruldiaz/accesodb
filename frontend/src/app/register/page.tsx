@@ -3,6 +3,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; 
 
+interface APIError {
+  msg: string;
+}
+
+
 export default function RegisterPage() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState<string[]>([]);
@@ -32,12 +37,12 @@ export default function RegisterPage() {
         body: JSON.stringify(form),
       });
 
-      const data = await res.json();
+      const data: {errors?: APIError[]; error?: string} = await res.json();
 
       if (!res.ok){
         if(data.errors){
           console.log(data.errors);
-          const errorMessages = data.errors.map((err: any) => err.msg);
+          const errorMessages = data.errors.map((err) => err.msg);
           setError(errorMessages);
           return;
         }else{

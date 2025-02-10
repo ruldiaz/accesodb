@@ -3,8 +3,15 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; 
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: string;
+}
+
 const Dashboard = () => {
-  const [userData, setUserData] = useState<any>(null); 
+  const [userData, setUserData] = useState<User | null>(null); 
   const [isLoading, setIsLoading] = useState(true); 
   const router = useRouter(); 
 
