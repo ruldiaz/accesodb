@@ -12,17 +12,12 @@ export default function Login() {
   const router = useRouter();
 
   // Enviar a dashboard si ya inició sesión
-  useEffect(()=>{
+ /* useEffect(()=>{
     const token = localStorage.getItem("token");
     if(token){
       router.push("/dashboard");
     }
-    
-  if (!token) {
-    console.log("No hay token, redirigiendo a /login"); // Verifica la redirección
-    router.replace("/login");
-  }
-  }, [router])
+  }, [router])*/
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
