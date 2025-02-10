@@ -38,7 +38,7 @@ export default function Login() {
 
       const data = await res.json();
       localStorage.setItem("token", data.token);
-
+      console.log("Token almacenado en localStorage:", data.token);
       
       router.push("/dashboard"); 
       
