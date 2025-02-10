@@ -10,7 +10,7 @@ const corsOptions = {
    origin: ['http://localhost:3000','https://accesodb.onrender.com', "https://accesodb-frontend.onrender.com"],
    credentials: true,
    methods: ['GET', 'POST'],
-   allowHeaders: ['Content-Type', 'Authorization']
+   allowedHeaders: ['Content-Type', 'Authorization']
 }
 
 const app = express();
@@ -21,8 +21,6 @@ app.use(express.json());
 sequelize.sync()
    .then(()=>console.log('Database connected and synchronized'))
    .catch((error)=>console.log('Error synchronizing to db', error));
-
-app.use(express.json());
 
 app.use('/api/users', userRoutes);
 
