@@ -40,12 +40,14 @@ export default function Login() {
       const data = await res.json();
       localStorage.setItem("token", data.token);
       console.log("Token almacenado en localStorage:", data.token);
-      
+
+      router.push("/dashboard"); 
+      /*
       setTimeout(()=>{
         router.push("/dashboard"); 
         console.log("Redirigiendo a /dashboard");
-      },1000);
-
+      },5000);
+*/
       
 
     } catch (err) {
