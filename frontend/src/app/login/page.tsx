@@ -1,6 +1,6 @@
 "use client"; 
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link"; 
 
@@ -12,12 +12,12 @@ export default function Login() {
   const router = useRouter();
 
   // Enviar a dashboard si ya inició sesión
- /* useEffect(()=>{
+  useEffect(()=>{
     const token = localStorage.getItem("token");
     if(token){
       router.push("/dashboard");
     }
-  }, [router])*/
+  }, [router])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
