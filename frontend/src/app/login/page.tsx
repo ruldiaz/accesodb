@@ -35,12 +35,17 @@ export default function Login() {
       if (!res.ok) throw new Error("Credenciales incorrectas");
 
       setSuccessMesage("Credenciales correctas, accesando...");
+      console.log("Estado actualizado:", successMessage);
 
       const data = await res.json();
       localStorage.setItem("token", data.token);
       console.log("Token almacenado en localStorage:", data.token);
       
-      router.push("/dashboard"); 
+      setTimeout(()=>{
+        router.push("/dashboard"); 
+        console.log("Redirigiendo a /dashboard");
+      },5000);
+
       
 
     } catch (err) {
