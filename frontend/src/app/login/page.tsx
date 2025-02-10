@@ -39,9 +39,9 @@ export default function Login() {
       const data = await res.json();
       localStorage.setItem("token", data.token);
 
-      setTimeout(()=>{
-        router.push("/dashboard"); 
-      },2000);
+      
+      router.push("/dashboard"); 
+      
 
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error desconocido");
