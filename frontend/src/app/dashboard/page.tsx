@@ -18,7 +18,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDashboard = async () => {
       const token = localStorage.getItem("token");
-
+      console.log("dashboard token: ", token);
       if (!token) {
         router.replace("/login"); 
         return;

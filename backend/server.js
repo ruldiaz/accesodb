@@ -10,7 +10,7 @@ const corsOptions = {
    origin: ['http://localhost:3000','https://accesodb.onrender.com', "https://accesodb-frontend.onrender.com"],
    credentials: true,
    methods: ['GET', 'POST'],
-   allowedHeaders: ['Content-Type', 'Authorization']
+   allowedHeaders: ['Authorization', 'Content-Type']
 }
 
 const app = express();
@@ -24,6 +24,7 @@ sequelize.sync()
 
 app.use('/api/users', userRoutes);
 
+const PORT = process.env.PORT || 5000;
 app.listen(5000, ()=>{
-   console.log("Server running on port 5000, on http://localhost:5000");
+   console.log(`Server running on port ${PORT}`);
 })
