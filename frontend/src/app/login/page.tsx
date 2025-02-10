@@ -17,6 +17,11 @@ export default function Login() {
     if(token){
       router.push("/dashboard");
     }
+    
+  if (!token) {
+    console.log("No hay token, redirigiendo a /login"); // Verifica la redirección
+    router.replace("/login");
+  }
   }, [router])
 
   const handleLogin = async (e: React.FormEvent) => {
