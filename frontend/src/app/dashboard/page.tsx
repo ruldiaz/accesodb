@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; 
 import Cookies from "js-cookie";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface User {
   id: string;
@@ -16,8 +18,10 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true); 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  //const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter(); 
+  
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
@@ -77,12 +81,22 @@ const Dashboard = () => {
       if(res.ok){
         const updatedUser = await res.json();
         setUserData(updatedUser.user);
-        setSuccessMessage("Datos actualizados correctamente.");
-        setTimeout(()=>{
-          setSuccessMessage("");
-        },3000);
+        toast.success("Datos actualizados correctamente.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+
+        //setSuccessMessage("Datos actualizados correctamente.");
+        //setTimeout(()=>{
+          //setSuccessMessage("");
+        //},3000);
       }else{
-        throw new Error("Error al actualizar datos.");
+        const errorData = await res.json();
+        toast.error(errorData.message, {
+          position: "top-right",
+          autoClose: 3000,
+        })
+        //throw new Error("Error al actualizar datos.");
       }
     } catch (error) {
       console.error("Error al actualizar usuario: ", error);
@@ -115,39 +129,66 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-2 text-sm font-[family-name:var(--font-geist-mono)]"> {/* Aplica la fuente también aquí */}
-      <h1 className="text-center mt-5">Interfaz de usuario</h1>
-      {userData ? (
-        <div className="space-y-4 p-20 text-center mt-10">
-          <form onSubmit={handleUpdate} className="space-y-4">
-            <div>
-              <label className="block text-sm">Nombre: <input type="text" value={name} onChange={(e)=>setName(e.target.value)} className="border p-2" /></label>
-            </div>
-            <div>
-              <label className="block text-sm">Correo electrónico: <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} className="border p-2" /></label>              
-            </div>
-            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Guardar cambios</button>
-          </form>
-          {successMessage && (
-            <p className="text-green-600 text-center">{successMessage}</p>
-          )}
-
-          <p><strong>Id:</strong> {userData.id}</p>
-          <p><strong>Nombre:</strong> {userData.name}</p>
-          <p><strong>Correo electrónico:</strong> {userData.email}</p>
-          <p><strong>Registrado desde:</strong> {formatDate(userData.createdAt)}</p>
-        </div>
-      ) : (
-        <p>No se pudo cargar la información del usuario.</p>
-      )}
-      <div className="flex justify-center mt-10">
+    <div className="flex flex-col items-center justify-center h-screen p-5 font-[family-name:var(--font-geist-mono)]">
+      <ToastContainer />
+      
+      <div className="relative bg-gray-50 shadow-md p-10 rounded-lg w-[90%] max-w-[600px] min-h-[400px] flex flex-col justify-center">
+        {/* Botón Editar Datos */}
         <button
-          onClick={handleLogout}
-          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
+          onClick={() => setIsEditing(!isEditing)}
+          className="absolute top-3 right-3 rounded-full border border-transparent transition-colors bg-foreground text-background px-4 py-2 text-sm hover:bg-[#383838] dark:hover:bg-[#ccc]"
         >
-          Cerrar sesión
+          {isEditing ? "Cancelar" : "Editar datos"}
         </button>
+
+        {isEditing ? (
+          <form onSubmit={handleUpdate} className="space-y-4">
+            <h2 className="text-center">Editar Usuario</h2>
+            <div>
+              <label className="block text-sm">Nombre:</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="border p-2 w-full"
+              />
+            </div>
+            <div>
+              <label className="block text-sm">Correo electrónico:</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="border p-2 w-full"
+              />
+            </div>
+            <div className="text-center">
+              <button
+                type="submit"
+                className="mt-5 rounded-full border border-transparent transition-colors bg-foreground text-background px-4 py-2 text-sm hover:bg-[#383838] dark:hover:bg-[#ccc]"
+              >
+                Guardar cambios
+              </button>
+            </div>
+          </form>
+        ) : (
+          <div className="space-y-2 text-center">
+            <h2>Datos del Usuario</h2>
+            <p><strong>Id:</strong> {userData?.id}</p>
+            <p><strong>Nombre:</strong> {userData?.name}</p>
+            <p><strong>Correo electrónico:</strong> {userData?.email}</p>
+            <p><strong>Registrado desde:</strong> {formatDate(userData?.createdAt || "")}</p>
+          </div>
+        )}
       </div>
+
+      {/* Botón de Cerrar sesión */}
+      <button
+        onClick={handleLogout}
+        className="mt-5 rounded-full border border-transparent transition-colors bg-foreground text-background px-4 py-2 text-sm hover:bg-[#383838] dark:hover:bg-[#ccc]"
+      >
+        Cerrar sesión
+      </button>
     </div>
   );
 };

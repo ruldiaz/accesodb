@@ -24,6 +24,11 @@ router.put('/update', authenticateToken, async (req, res) => {
       return res.status(400).json({message: "El nombre y el correo son obligatorios."});
     }
 
+    const existingUser = await User.findOne({where: {email}});
+    if(existingUser){
+      return res.status(400).json({message: "El correo que ingresaste no está disponible."});
+    }
+
     const user = await User.findByPk(req.user.id, {
       attributes: {exclude: ['password']}
     });
