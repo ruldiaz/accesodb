@@ -55,6 +55,7 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     //localStorage.removeItem("token"); 
+    Cookies.remove("token");
     router.push("/"); 
   };
 
