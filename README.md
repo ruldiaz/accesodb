@@ -54,7 +54,9 @@ NEXT_PUBLIC_API_URL=https://accesodb.onrender.com
 ## **Ejecutar la aplicación en local**
 Frontend (Next.js)
 Ejecutar en la carpeta frontend:
+```bash
 npm run dev
+```
 La aplicación se ejecutará en: [http://localhost:3000]
 
 
