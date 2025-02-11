@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link"; 
+import Cookies from "js-cookie";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -13,7 +14,8 @@ export default function Login() {
 
   // Enviar a dashboard si ya inició sesión
   useEffect(()=>{
-    const token = localStorage.getItem("token");
+    //const token = localStorage.getItem("token");
+    const token = Cookies.get("token");
     if(token){
       router.push("/dashboard");
     }
@@ -41,8 +43,9 @@ export default function Login() {
 
       const data = await res.json();
       
-      localStorage.setItem("token", data.token);
-      console.log("Token almacenado en localStorage:", data.token);
+      //localStorage.setItem("token", data.token);
+      Cookies.set("Token almacenado en la cookie: ", data.token);
+      //console.log("Token almacenado en localStorage:", data.token);
 
       setTimeout(()=>{
         router.push("/dashboard"); 

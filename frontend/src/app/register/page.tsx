@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; 
+import Cookies from "js-cookie";
 
 interface APIError {
   msg: string;
@@ -15,7 +16,8 @@ export default function RegisterPage() {
   const router = useRouter(); 
 
   useEffect(()=>{
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token");
+    //const token = localStorage.getItem("token");
     if(token){
       router.push("/dashboard");
     }

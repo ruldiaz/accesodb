@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; 
+import Cookies from "js-cookie";
 
 interface User {
   id: string;
@@ -17,7 +18,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchDashboard = async () => {
-      const token = localStorage.getItem("token");
+      //const token = localStorage.getItem("token");
+      const token = Cookies.get("token");
       console.log("dashboard token: ", token);
       if (!token) {
         router.replace("/login"); 
@@ -52,7 +54,7 @@ const Dashboard = () => {
   }, [router]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); 
+    //localStorage.removeItem("token"); 
     router.push("/"); 
   };
 
