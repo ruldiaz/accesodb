@@ -44,11 +44,16 @@ export default function RegisterPage() {
       if (!res.ok){
         if(data.errors){
           console.log(data.errors);
-          const errorMessages = data.errors.map((err) => err.msg);
-          toast.error(errorMessages, {
+          //const errorMessages = data.errors.map((err) => err.msg);
+          const errorMessages = data.errors.map((err) => err.msg).join("\n");
+          /*toast.error(errorMessages[0], {
             position: "top-right",
             autoClose: 3000,
-          })
+          })*/
+          toast.error(errorMessages, {
+            position: "top-right",
+            autoClose: 5000,
+          });
           
           return;
         }else{
@@ -84,7 +89,15 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-start pt-20 bg-gray-100 dark:bg-gray-900">
       <ToastContainer />
-      <div className="bg-black/[.05] dark:bg-white/[.06] p-6 rounded-lg shadow-lg w-80 sm:w-96 text-center">
+      <img
+                className=" top-16"
+                src="/logo3.jpg"
+                alt="Register logo"
+                width={180}
+                height={40}
+          
+          />
+      <div className="mt-10 bg-black/[.05] dark:bg-white/[.06] p-6 rounded-lg shadow-lg w-80 sm:w-96 text-center">
         <h2 className="text-sm font-[family-name:var(--font-geist-mono)] text-gray-900 dark:text-gray-100">
           Crea una cuenta nueva
         </h2>
@@ -114,7 +127,7 @@ export default function RegisterPage() {
             onChange={handleChange}
             required
           />
-          <button className="bg-black/[.05] dark:bg-white/[.06] px-3 py-2 rounded font-semibold hover:bg-black/[.1] dark:hover:bg-white/[.12] transition" type="submit">
+          <button className="bg-black/[.05] dark:bg-white/[.06] px-3 py-2 rounded font-semibold hover:bg-black/[.1] dark:hover:bg-white/[.12] transition text-white" type="submit">
             Registrarse
           </button>
         </form>

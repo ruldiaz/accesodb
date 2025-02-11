@@ -66,6 +66,14 @@ export default function Login() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <ToastContainer />
+      <img
+                className="absolute top-20"
+                src="/logo2.png"
+                alt="Blockchain logo"
+                width={300}
+                height={50}
+          
+          />
       <div className="bg-black/[.05] dark:bg-white/[.06] p-6 rounded-lg shadow-lg w-80 sm:w-96 text-center">
         <h2 className="text-sm font-[family-name:var(--font-geist-mono)] text-gray-900 dark:text-gray-100">
           Ingresa los datos de acceso de tu cuenta
@@ -87,7 +95,7 @@ export default function Login() {
             placeholder="Contraseña"
             required
           />
-          <button className="bg-black/[.05] dark:bg-white/[.06] px-3 py-2 rounded font-semibold hover:bg-black/[.1] dark:hover:bg-white/[.12] transition" type="submit">
+          <button className="bg-black/[.05] dark:bg-white/[.06] px-3 py-2 rounded font-semibold hover:bg-black/[.1] dark:hover:bg-white/[.12] transition text-white" type="submit">
             Ingresar
           </button>
         </form>
