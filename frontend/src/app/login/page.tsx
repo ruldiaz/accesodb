@@ -12,6 +12,8 @@ export default function Login() {
   const [successMessage, setSuccessMesage] = useState("");
   const router = useRouter();
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   // Enviar a dashboard si ya inició sesión
   useEffect(()=>{
     //const token = localStorage.getItem("token");
@@ -28,7 +30,7 @@ export default function Login() {
     setSuccessMesage("");
 
     try {
-      const res = await fetch("https://accesodb.onrender.com/api/users/login", {
+      const res = await fetch(`${API_URL}/api/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

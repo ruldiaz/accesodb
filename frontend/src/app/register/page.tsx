@@ -14,6 +14,7 @@ export default function RegisterPage() {
   const [error, setError] = useState<string[]>([]);
   const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter(); 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(()=>{
     const token = Cookies.get("token");
@@ -33,7 +34,7 @@ export default function RegisterPage() {
     setSuccessMessage("");
 
     try {
-      const res = await fetch("https://accesodb.onrender.com/api/users/register", {
+      const res = await fetch(`${API_URL}/api/users/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

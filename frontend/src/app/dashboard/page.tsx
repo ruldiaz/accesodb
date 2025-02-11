@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [userData, setUserData] = useState<User | null>(null); 
   const [isLoading, setIsLoading] = useState(true); 
   const router = useRouter(); 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -27,7 +28,7 @@ const Dashboard = () => {
       }
 
       try {
-        const res = await fetch("https://accesodb.onrender.com/api/users/dashboard", {
+        const res = await fetch(`${API_URL}/api/users/dashboard`, {
           method: "GET",
           credentials: "include",
           headers: {
