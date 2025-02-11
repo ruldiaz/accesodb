@@ -30,13 +30,13 @@ git clone https://github.com/ruldiaz/accesodb.git
 cd accesodb
 ```
 
-## **Instalar dependencias** 
+### 2️⃣**Instalar dependencias** 
 Ejecutar en las carpetas backend y frontend:
 ```bash
 npm install
 ```
 
-## **Configurar variables de entorno**
+### 3️⃣ **Configurar variables de entorno**
 Crear un archivo .env en backend y otro en frontend con las variables de configuración necesarias:
 
 Ejemplo para el backend (.env)
