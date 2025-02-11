@@ -19,14 +19,14 @@ const Dashboard = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  //const [successMessage, setSuccessMessage] = useState("");
+  
   const router = useRouter(); 
   
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchDashboard = async () => {
-      //const token = localStorage.getItem("token");
+  
       const token = Cookies.get("token");
       console.log("dashboard token: ", token);
       if (!token) {
@@ -86,17 +86,13 @@ const Dashboard = () => {
           autoClose: 3000,
         });
 
-        //setSuccessMessage("Datos actualizados correctamente.");
-        //setTimeout(()=>{
-          //setSuccessMessage("");
-        //},3000);
       }else{
         const errorData = await res.json();
         toast.error(errorData.message, {
           position: "top-right",
           autoClose: 3000,
         })
-        //throw new Error("Error al actualizar datos.");
+        
       }
     } catch (error) {
       console.error("Error al actualizar usuario: ", error);
@@ -105,7 +101,7 @@ const Dashboard = () => {
   }
 
   const handleLogout = () => {
-    //localStorage.removeItem("token"); 
+    
     Cookies.remove("token");
     router.push("/"); 
   };
@@ -133,7 +129,7 @@ const Dashboard = () => {
       <ToastContainer />
       
       <div className="relative bg-gray-50 shadow-md p-10 rounded-lg w-[90%] max-w-[600px] min-h-[400px] flex flex-col justify-center">
-        {/* Botón Editar Datos */}
+        
         <button
           onClick={() => setIsEditing(!isEditing)}
           className="absolute top-3 right-3 rounded-full border border-transparent transition-colors bg-foreground text-background px-4 py-2 text-sm hover:bg-[#383838] dark:hover:bg-[#ccc]"
@@ -182,7 +178,6 @@ const Dashboard = () => {
         )}
       </div>
 
-      {/* Botón de Cerrar sesión */}
       <button
         onClick={handleLogout}
         className="mt-5 rounded-full border border-transparent transition-colors bg-foreground text-background px-4 py-2 text-sm hover:bg-[#383838] dark:hover:bg-[#ccc]"

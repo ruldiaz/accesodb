@@ -13,14 +13,13 @@ interface APIError {
 
 export default function RegisterPage() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
-  //const [error, setError] = useState<string[]>([]);
-  //const [successMessage, setSuccessMessage] = useState("");
+  
   const router = useRouter(); 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(()=>{
     const token = Cookies.get("token");
-    //const token = localStorage.getItem("token");
+    
     if(token){
       router.push("/dashboard");
     }
@@ -32,8 +31,6 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    //setError([]);
-    //setSuccessMessage("");
 
     try {
       const res = await fetch(`${API_URL}/api/users/register`, {
@@ -52,14 +49,14 @@ export default function RegisterPage() {
             position: "top-right",
             autoClose: 3000,
           })
-          //setError(errorMessages);
+          
           return;
         }else{
           toast.error(data.error || "Error, intente de nuevo.", {
             position: "top-right",
             autoClose: 3000,
           })
-          //setError([data.error || "Error, intente de nuevo."]);
+
           return;
         }
         
@@ -69,7 +66,7 @@ export default function RegisterPage() {
         position: "top-right",
         autoClose: 3000,
       });
-      //setSuccessMessage("Usuario registrado con éxito.");
+      
 
       setTimeout(()=>{
         router.push("/login");
@@ -80,7 +77,7 @@ export default function RegisterPage() {
         position: "top-right",
         autoClose: 3000,
       })
-      //setError([err instanceof Error ? err.message : "Error desconocido"]);
+
     }
   };
 
@@ -91,17 +88,7 @@ export default function RegisterPage() {
         <h2 className="text-sm font-[family-name:var(--font-geist-mono)] text-gray-900 dark:text-gray-100">
           Crea una cuenta nueva
         </h2>
-        {/*error.length > 0 && (
-          <div className="text-red-500 text-sm mt-2">
-            {error.map((err, index) => (
-              <p key={index}>{err}</p>
-            ))}
-          </div>
-        )*/}
 
-        {/*successMessage && (
-          <p className="text-green-500 text-sm mt-2">{successMessage}</p>
-        )*/}
         <form className="mt-4 flex flex-col gap-4 text-sm font-[family-name:var(--font-geist-mono)]" onSubmit={handleSubmit}>
           <input
             className="border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
