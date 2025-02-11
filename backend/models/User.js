@@ -17,7 +17,7 @@ User.init(
       allowNull: false,
       unique: true,
       set(value) {
-        this.setDataValue('email', value.toLowerCase);
+        this.setDataValue('email', value.toLowerCase());
       }
     },
     password: {
