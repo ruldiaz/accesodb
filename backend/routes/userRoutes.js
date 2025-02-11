@@ -1,5 +1,5 @@
 const express = require('express');
-const { loginUser, registerUser, getAllUsers } = require('../controllers/userController');
+const { loginUser, registerUser, getAllUsers, updateUser } = require('../controllers/userController');
 const authenticateToken = require('../middlewares/authMiddleware');
 const User = require('../models/User');
 const {check} = require('express-validator');
@@ -17,43 +17,7 @@ router.post('/register', [
 router.get('/list', getAllUsers);
 
 // Editar datos de usuario
-router.put('/update', authenticateToken, async (req, res) => {
-  try {
-    const {name, email} = req.body;
-
-    if(!name || !email){
-      return res.status(400).json({message: "El nombre y el correo son obligatorios."});
-    }
-
-    const user = await User.findByPk(req.user.id, {
-      attributes: {exclude: ['password']}
-    });
-
-    if(!user){
-      return res.status(401).json({message: "Usuario no encontrado."})
-    }
-
-    if(user.email !== email.toLowerCase()){
-      const existingEmailUser = await User.findOne({where: {email}});
- 
-      if(existingEmailUser && existingEmailUser.id !== user.id){
-        return res.status(400).json({message: "El correo que ingresaste no está disponible."});
-      }
-    }
-
-    await user.update({name, email});
-
-    return res.json({message: "Usuario actualizado correctamente.", user});
-  } catch (error) {
-    if (error.name === 'SequelizeUniqueConstraintError') {
-      return res.status(400).json({ message: "El correo ya está registrado." });
-    }
-    
-    console.error(error);
-    res.status(500).json({ message: "Hubo un problema al actualizar el usuario." });
-  }
-  
-})
+router.put('/update', authenticateToken, updateUser);
 
 // Ruta con proteccion
 router.get('/dashboard', authenticateToken, async (req, res) => {
