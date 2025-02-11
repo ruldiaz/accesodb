@@ -9,7 +9,7 @@ Aplicación para autenticación de usuarios mediante correo y contraseña, utili
 - **Autenticación:** JWT + Cookies  
 - **Despliegue:** Vercel (Frontend) y Render (Backend)  
 - **Gestión de dependencias:** npm  
-- **Contenedores:** Docker (opcional)  
+- **Contenedores:** Docker   
 
 ---
 
