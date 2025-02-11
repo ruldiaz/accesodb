@@ -20,13 +20,9 @@ router.get('/list', getAllUsers);
 router.put('/update', authenticateToken, async (req, res) => {
   try {
     const {name, email} = req.body;
+
     if(!name || !email){
       return res.status(400).json({message: "El nombre y el correo son obligatorios."});
-    }
-
-    const existingUser = await User.findOne({where: {email}});
-    if(existingUser){
-      return res.status(400).json({message: "El correo que ingresaste no está disponible."});
     }
 
     const user = await User.findByPk(req.user.id, {
@@ -35,6 +31,14 @@ router.put('/update', authenticateToken, async (req, res) => {
 
     if(!user){
       return res.status(401).json({message: "Usuario no encontrado."})
+    }
+
+    if(user.email !== email){
+      const existingEmailUser = await User.findOne({where: {email}});
+ 
+      if(existingEmailUser.id !== user.id){
+        return res.status(400).json({message: "El correo que ingresaste no está disponible."});
+      }
     }
 
     await user.update({name, email});
