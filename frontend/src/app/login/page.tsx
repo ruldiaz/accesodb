@@ -16,6 +16,7 @@ export default function Login() {
   useEffect(()=>{
     //const token = localStorage.getItem("token");
     const token = Cookies.get("token");
+    console.log(token);
     if(token){
       router.push("/dashboard");
     }
