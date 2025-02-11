@@ -45,7 +45,7 @@ export default function Login() {
       const data = await res.json();
       
       //localStorage.setItem("token", data.token);
-      Cookies.set("Token almacenado en la cookie: ", data.token, { expires: 7, secure: process.env.NODE_ENV === "production" });
+      Cookies.set("token", data.token, { expires: 7, secure: process.env.NODE_ENV === "production" });
       //console.log("Token almacenado en localStorage:", data.token);
 
       setTimeout(()=>{
