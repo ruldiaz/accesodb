@@ -19,7 +19,7 @@ const loginUser =  async(req, res) => {
          httpOnly: true,
          secure: true,
          sameSite: 'none',
-         domain: process.env.NODE_ENV === 'production' ? 'accesodb.onrender.com' : undefined,
+         domain: 'accesodb.onrender.com',
          maxAge: 60 * 60 * 1000 // 1h
       })
       res.json({message: 'Login correcto.', token});
