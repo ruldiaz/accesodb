@@ -16,6 +16,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true); 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter(); 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -68,10 +69,21 @@ const Dashboard = () => {
         credentials: 'include',
         headers: {
           Authorization: token || "",
-          "Content-Tpe": "application/json"
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({name, email}),
       });
+
+      if(res.ok){
+        const updatedUser = await res.json();
+        setUserData(updatedUser.user);
+        setSuccessMessage("Datos actualizados correctamente.");
+        setTimeout(()=>{
+          setSuccessMessage("");
+        },3000);
+      }else{
+        throw new Error("Error al actualizar datos.");
+      }
     } catch (error) {
       console.error("Error al actualizar usuario: ", error);
       alert("Error al actualizar usuario");
@@ -109,15 +121,17 @@ const Dashboard = () => {
         <div className="space-y-4 p-20 text-center mt-10">
           <form onSubmit={handleUpdate} className="space-y-4">
             <div>
-              <label className="block text-sm">Nombre: </label>
-              <input type="text" value={name} onChange={(e)=>setName(e.target.value)} className="border p-2 w-full" />
+              <label className="block text-sm">Nombre: <input type="text" value={name} onChange={(e)=>setName(e.target.value)} className="border p-2" /></label>
             </div>
             <div>
-              <label className="block text-sm">Correo electrónico:</label>
-              <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} className="border p-2 w-full" />
+              <label className="block text-sm">Correo electrónico: <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} className="border p-2" /></label>              
             </div>
             <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Guardar cambios</button>
           </form>
+          {successMessage && (
+            <p className="text-green-600 text-center">{successMessage}</p>
+          )}
+
           <p><strong>Id:</strong> {userData.id}</p>
           <p><strong>Nombre:</strong> {userData.name}</p>
           <p><strong>Correo electrónico:</strong> {userData.email}</p>
