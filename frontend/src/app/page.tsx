@@ -16,8 +16,8 @@ export default function Home() {
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
           className=""
-          src="/logo.jpg"
-          alt="Next.js logo"
+          src="/logo4.jpg"
+          alt="Landing logo"
           width={300}
           height={50}
           priority
