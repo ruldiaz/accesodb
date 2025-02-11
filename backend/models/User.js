@@ -9,13 +9,16 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       set(value) {
-        this.setDataValue('name', value.toLowerCase());
+        this.setDataValue('name', value);
       },
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      set(value) {
+        this.setDataValue('email', value.toLowerCase);
+      }
     },
     password: {
       type: DataTypes.STRING,
@@ -28,8 +31,8 @@ User.init(
     tableName: 'users', // El nombre real de la tabla en la base de datos de postgres
     hooks: {
       beforeValidate: (user) => {
-        if (user.name) {
-          user.name = user.name.toLowerCase();
+        if (user.email) {
+          user.email = user.email.toLowerCase();
         }
       },
     },
