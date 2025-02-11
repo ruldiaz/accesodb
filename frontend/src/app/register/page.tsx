@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; 
 import Cookies from "js-cookie";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface APIError {
   msg: string;
@@ -11,8 +13,8 @@ interface APIError {
 
 export default function RegisterPage() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
-  const [error, setError] = useState<string[]>([]);
-  const [successMessage, setSuccessMessage] = useState("");
+  //const [error, setError] = useState<string[]>([]);
+  //const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter(); 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -30,8 +32,8 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError([]);
-    setSuccessMessage("");
+    //setError([]);
+    //setSuccessMessage("");
 
     try {
       const res = await fetch(`${API_URL}/api/users/register`, {
@@ -46,42 +48,60 @@ export default function RegisterPage() {
         if(data.errors){
           console.log(data.errors);
           const errorMessages = data.errors.map((err) => err.msg);
-          setError(errorMessages);
+          toast.error(errorMessages, {
+            position: "top-right",
+            autoClose: 3000,
+          })
+          //setError(errorMessages);
           return;
         }else{
-          setError([data.error || "Error, intente de nuevo."]);
+          toast.error(data.error || "Error, intente de nuevo.", {
+            position: "top-right",
+            autoClose: 3000,
+          })
+          //setError([data.error || "Error, intente de nuevo."]);
           return;
         }
         
       } 
 
-      setSuccessMessage("Usuario registrado con éxito.");
+      toast.success("Usuario registrado con éxito, puedes ingresar.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      //setSuccessMessage("Usuario registrado con éxito.");
 
       setTimeout(()=>{
         router.push("/login");
       },2000);
 
     } catch (err) {
-      setError([err instanceof Error ? err.message : "Error desconocido"]);
+      toast.error([err instanceof Error ? err.message : "Error desconocido"], {
+        position: "top-right",
+        autoClose: 3000,
+      })
+      //setError([err instanceof Error ? err.message : "Error desconocido"]);
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start pt-20 bg-gray-100 dark:bg-gray-900">
+      <ToastContainer />
       <div className="bg-black/[.05] dark:bg-white/[.06] p-6 rounded-lg shadow-lg w-80 sm:w-96 text-center">
         <h2 className="text-sm font-[family-name:var(--font-geist-mono)] text-gray-900 dark:text-gray-100">
           Crea una cuenta nueva
         </h2>
-        {error.length > 0 && (
+        {/*error.length > 0 && (
           <div className="text-red-500 text-sm mt-2">
             {error.map((err, index) => (
               <p key={index}>{err}</p>
             ))}
           </div>
-        )}
-        {successMessage && (
+        )*/}
+
+        {/*successMessage && (
           <p className="text-green-500 text-sm mt-2">{successMessage}</p>
-        )}
+        )*/}
         <form className="mt-4 flex flex-col gap-4 text-sm font-[family-name:var(--font-geist-mono)]" onSubmit={handleSubmit}>
           <input
             className="border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"

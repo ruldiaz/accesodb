@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link"; 
 import Cookies from "js-cookie";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMesage] = useState("");
+  //const [error, setError] = useState("");
+  //const [successMessage, setSuccessMesage] = useState("");
   const router = useRouter();
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -26,8 +28,8 @@ export default function Login() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(""); 
-    setSuccessMesage("");
+    //setError(""); 
+    //setSuccessMesage("");
 
     try {
       const res = await fetch(`${API_URL}/api/users/login`, {
@@ -40,9 +42,12 @@ export default function Login() {
       if (!res.ok) throw new Error("Credenciales incorrectas");
 
       
-
-      setSuccessMesage("Credenciales correctas, accesando...");
-      console.log("Estado actualizado:", successMessage);
+      toast.success("Credenciales correctas, accesando...", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      //setSuccessMesage("Credenciales correctas, accesando...");
+      //console.log("Estado actualizado:", successMessage);
 
       const data = await res.json();
       
@@ -57,13 +62,17 @@ export default function Login() {
       
 
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Error desconocido");
+      toast.error(err instanceof Error ? err.message : "Error desconocido", {
+        position: "top-right",
+        autoClose: 3000,
+      })
+      //setError(err instanceof Error ? err.message : "Error desconocido");
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
-      
+      <ToastContainer />
       <div className="bg-black/[.05] dark:bg-white/[.06] p-6 rounded-lg shadow-lg w-80 sm:w-96 text-center">
         <h2 className="text-sm font-[family-name:var(--font-geist-mono)] text-gray-900 dark:text-gray-100">
           Ingresa los datos de acceso de tu cuenta
@@ -88,10 +97,10 @@ export default function Login() {
           <button className="bg-black/[.05] dark:bg-white/[.06] px-3 py-2 rounded font-semibold hover:bg-black/[.1] dark:hover:bg-white/[.12] transition" type="submit">
             Ingresar
           </button>
-          {successMessage && (
+          {/*successMessage && (
             <p className="text-green-500 text-sm mt-2">{successMessage}</p>
-          )}
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          )*/}
+          {/*error && <p className="text-red-500 text-sm">{error}</p>*/}
         </form>
 
         <p className="mt-4 text-sm font-[family-name:var(--font-geist-mono)] text-gray-900 dark:text-gray-100">

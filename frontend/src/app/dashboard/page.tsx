@@ -138,7 +138,7 @@ const Dashboard = () => {
           onClick={() => setIsEditing(!isEditing)}
           className="absolute top-3 right-3 rounded-full border border-transparent transition-colors bg-foreground text-background px-4 py-2 text-sm hover:bg-[#383838] dark:hover:bg-[#ccc]"
         >
-          {isEditing ? "Cancelar" : "Editar datos"}
+          {isEditing ? "Cerrar" : "Editar datos"}
         </button>
 
         {isEditing ? (
