@@ -1,7 +1,6 @@
 const express = require('express');
-const { loginUser, registerUser, getAllUsers, updateUser } = require('../controllers/userController');
+const { loginUser, registerUser, getAllUsers, updateUser, getUserDashboard } = require('../controllers/userController');
 const authenticateToken = require('../middlewares/authMiddleware');
-const User = require('../models/User');
 const {check} = require('express-validator');
 
 const router = express.Router();
@@ -20,19 +19,6 @@ router.get('/list', getAllUsers);
 router.put('/update', authenticateToken, updateUser);
 
 // Ruta con proteccion
-router.get('/dashboard', authenticateToken, async (req, res) => {
-   try {
-      const user = await User.findByPk(req.user.id, {
-        attributes: {exclude: ['password']}
-      }); 
-      if (!user) {
-        return res.status(401).json({ message: "Usuario no encontrado" });
-      }
-      res.json({user});
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: "Error en el servidor" });
-    }
-})
+router.get('/dashboard', authenticateToken, getUserDashboard);
 
 module.exports = router;

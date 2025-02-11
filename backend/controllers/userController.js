@@ -104,9 +104,25 @@ const updateUser = async (req, res) => {
     }
 }
 
+const getUserDashboard = async (req, res) => {
+   try {
+      const user = await User.findByPk(req.user.id, {
+        attributes: {exclude: ['password']}
+      }); 
+      if (!user) {
+        return res.status(401).json({ message: "Usuario no encontrado" });
+      }
+      res.json({user});
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Error en el servidor" });
+    }
+}
+
 module.exports = {
    loginUser,
    registerUser,
    getAllUsers,
-   updateUser
+   updateUser,
+   getUserDashboard
 }
