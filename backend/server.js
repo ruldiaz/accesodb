@@ -11,7 +11,7 @@ dotenv.config(); // Se cargan variables de entorno
 const corsOptions = {
    origin: ['https://accesodbfrontend.vercel.app','http://localhost:3000','https://accesodb.onrender.com', "https://accesodb-frontend.onrender.com"],
    credentials: true,
-   methods: ['GET', 'POST'],
+   methods: ['GET', 'POST','PUT'],
    allowedHeaders: ['Authorization', 'Content-Type']
 }
 

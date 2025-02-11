@@ -16,6 +16,31 @@ router.post('/register', [
 ],registerUser);
 router.get('/list', getAllUsers);
 
+// Editar datos de usuario
+router.put('/update', authenticateToken, async (req, res) => {
+  try {
+    const {name, email} = req.body;
+    if(!name || !email){
+      return res.status(400).json({message: "El nombre y el correo son obligatorios."});
+    }
+
+    const user = await User.findByPk(req.user.id, {
+      attributes: {exclude: ['password']}
+    });
+
+    if(!user){
+      return res.status(401).json({message: "Usuario no encontrado."})
+    }
+
+    await user.update({name, email});
+
+    return res.json({message: "Usuario actualizado correctamente.", user});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({message: error.message})
+  }
+})
+
 // Ruta con proteccion
 router.get('/dashboard', authenticateToken, async (req, res) => {
    try {
