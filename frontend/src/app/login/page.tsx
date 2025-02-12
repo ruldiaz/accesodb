@@ -71,7 +71,7 @@ export default function Login() {
                 className="absolute top-20"
                 src="/logo2.png"
                 alt="Blockchain logo"
-                width={300}
+                width={200}
                 height={50}
           
           />
