@@ -24,6 +24,7 @@ sequelize.sync()
    .then(()=>console.log('Database connected and synchronized'))
    .catch((error)=>console.log('Error synchronizing to db', error));
 
+   sequelize.sync({ force: true });
 app.use('/api/users', userRoutes);
 
 const PORT = process.env.PORT || 5000;
