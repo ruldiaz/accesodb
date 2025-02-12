@@ -79,9 +79,14 @@ docker-compose up --build
 - Acceder a la aplicación en el navegador
 
 ## **Endpoints del Backend**
-Autenticación
-POST	/api/users/register	Registra un nuevo usuario
-POST	/api/users/login	Inicia sesión
-GET   /api/users/dashboard Interfaz de usuario
-POST  /api/users/forgot-password Recupera contraseña, envía una liga al correo registrado para su reseteo
-POST  /api/users/reset-password/:token Resetea la contraseña para restablecer el acceso al sistema
+
+### Autenticación
+
+| Método | Endpoint                           | Descripción                                                       |
+|--------|------------------------------------|-------------------------------------------------------------------|
+| POST   | `/api/users/register`               | Registra un nuevo usuario                                          |
+| POST   | `/api/users/login`                  | Inicia sesión                                                      |
+| GET    | `/api/users/dashboard`              | Interfaz de usuario                                                |
+| POST   | `/api/users/forgot-password`         | Recupera contraseña, envía una liga al correo registrado para su reseteo |
+| POST   | `/api/users/reset-password/:token`   | Resetea la contraseña para restablecer el acceso al sistema        |
+
