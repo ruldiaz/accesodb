@@ -36,6 +36,7 @@ export default function ResetPassword({ params }: { params: Promise<{ token: str
       setTimeout(() => router.push("/login"), 3000);
     } catch (err) {
       toast.error("Error al restablecer la contraseña.", { position: "top-right", autoClose: 3000 });
+      console.log(err);
     }
   };
 
