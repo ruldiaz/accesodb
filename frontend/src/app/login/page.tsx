@@ -6,6 +6,7 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -66,7 +67,7 @@ export default function Login() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <ToastContainer />
-      <img
+      <Image
                 className="absolute top-20"
                 src="/logo2.png"
                 alt="Blockchain logo"

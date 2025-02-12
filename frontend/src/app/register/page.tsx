@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
 
 interface APIError {
   msg: string;
@@ -89,7 +90,7 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-start pt-20 bg-gray-100 dark:bg-gray-900">
       <ToastContainer />
-      <img
+      <Image
                 className=" top-16"
                 src="/logo3.jpg"
                 alt="Register logo"

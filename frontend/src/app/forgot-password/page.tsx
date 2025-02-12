@@ -6,13 +6,11 @@ import { toast, ToastContainer } from "react-toastify";
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`${API_URL}/api/users/forgot-password`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URLL}/api/users/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -27,6 +25,7 @@ export default function ForgotPassword() {
 
     } catch (err) {
       toast.error("Error al enviar el correo.", { position: "top-right", autoClose: 3000 });
+      console.error(err);
     }
   };
 

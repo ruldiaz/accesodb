@@ -21,8 +21,6 @@ const Dashboard = () => {
   const [isEditing, setIsEditing] = useState(false);
   
   const router = useRouter(); 
-  
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -35,7 +33,7 @@ const Dashboard = () => {
       }
 
       try {
-        const res = await fetch(`${API_URL}/api/users/dashboard`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/dashboard`, {
           method: "GET",
           credentials: "include",
           headers: {
@@ -68,7 +66,7 @@ const Dashboard = () => {
     const token = Cookies.get("token");
 
     try {
-      const res = await fetch(`${API_URL}/api/users/update`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/update`, {
         method: 'PUT',
         credentials: 'include',
         headers: {
