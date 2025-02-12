@@ -105,6 +105,7 @@ export default function Login() {
           <Link href="/register" className="text-blue-500 hover:underline">
             Crea una cuenta gratis!
           </Link>
+          <Link href="/forgot-password">¿Olvidaste tu contraseña?</Link>
         </p>
       </div>
     </div>
